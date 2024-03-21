@@ -1494,7 +1494,7 @@ void G2_ResetRagDoll(CGhoul2Info_v& ghoul2_v)
 
 	for (model = 0; model < ghoul2_v.size(); model++)
 	{
-		if (ghoul2_v[model].mmodel_index != -1)
+		if (ghoul2_v[model].mModelindex != -1)
 		{
 			break;
 		}
@@ -1550,7 +1550,7 @@ void G2_SetRagDoll(CGhoul2Info_v& ghoul2_v, CRagDollParams* parms)
 	int model;
 	for (model = 0; model < ghoul2_v.size(); model++)
 	{
-		if (ghoul2_v[model].mmodel_index != -1)
+		if (ghoul2_v[model].mModelindex != -1)
 		{
 			break;
 		}

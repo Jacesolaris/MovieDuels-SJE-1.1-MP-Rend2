@@ -836,7 +836,7 @@ typedef struct CollisionRecord_s
 {
 	float		mDistance;
 	int			mentity_num;
-	int			mmodel_index;
+	int			mModelindex;
 	int			mPolyIndex;
 	int			mSurfaceIndex;
 	vec3_t		mCollisionPosition;

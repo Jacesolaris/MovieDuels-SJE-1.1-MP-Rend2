@@ -1082,7 +1082,7 @@ static bool G2_TracePolys(const mdxmSurface_t* surface, const mdxmSurfHierarchy_
 					newCol.mPolyIndex = j;
 					newCol.mentity_num = TS.entNum;
 					newCol.mSurfaceIndex = surface->thisSurfaceIndex;
-					newCol.mmodel_index = TS.modelIndex;
+					newCol.mModelindex = TS.modelIndex;
 					if (face > 0)
 					{
 						newCol.mFlags = G2_FRONTFACE;
@@ -1307,7 +1307,7 @@ static bool G2_RadiusTracePolys(const mdxmSurface_t* surface, CTraceSurface& TS)
 				newCol.mPolyIndex = j;
 				newCol.mentity_num = TS.entNum;
 				newCol.mSurfaceIndex = surface->thisSurfaceIndex;
-				newCol.mmodel_index = TS.modelIndex;
+				newCol.mModelindex = TS.modelIndex;
 				//					if (face>0)
 				//					{
 				newCol.mFlags = G2_FRONTFACE;
@@ -1495,7 +1495,7 @@ void G2_TraceModels(CGhoul2Info_v& ghoul2, vec3_t rayStart, vec3_t rayEnd, Colli
 #ifdef _G2_GORE
 		goremodel_index = i;
 		// don't bother with models that we don't care about.
-		if (ghoul2[i].mmodel_index == -1)
+		if (ghoul2[i].mModelindex == -1)
 		{
 			continue;
 		}
@@ -1688,7 +1688,7 @@ qboolean G2_SaveGhoul2Models(CGhoul2Info_v& ghoul2, char** buffer, int* size)
 	*size = 0;
 
 	// this one isn't a define since I couldn't work out how to figure it out at compile time
-	const int ghoul2BlockSize = reinterpret_cast<size_t>(&ghoul2[0].mTransformedVertsArray) - reinterpret_cast<size_t>(&ghoul2[0].mmodel_index);
+	const int ghoul2BlockSize = reinterpret_cast<size_t>(&ghoul2[0].mTransformedVertsArray) - reinterpret_cast<size_t>(&ghoul2[0].mModelindex);
 
 	// add in count for number of ghoul2 models
 	*size += 4;
@@ -1721,8 +1721,8 @@ qboolean G2_SaveGhoul2Models(CGhoul2Info_v& ghoul2, char** buffer, int* size)
 	for (i = 0; i < ghoul2.size(); i++)
 	{
 		// first save out the ghoul2 details themselves
-		//		Com_OPrintf("G2_SaveGhoul2Models(): ghoul2[%d].mmodel_index = %d\n",i,ghoul2[i].mmodel_index);
-		memcpy(tempBuffer, &ghoul2[i].mmodel_index, ghoul2BlockSize);
+		//		Com_OPrintf("G2_SaveGhoul2Models(): ghoul2[%d].mModelindex = %d\n",i,ghoul2[i].mModelindex);
+		memcpy(tempBuffer, &ghoul2[i].mModelindex, ghoul2BlockSize);
 		tempBuffer += ghoul2BlockSize;
 
 		// save out how many surfaces we have
@@ -1787,23 +1787,23 @@ void G2_LoadGhoul2Model(CGhoul2Info_v& ghoul2, const char* buffer)
 
 	// this one isn't a define since I couldn't work out how to figure it out at compile time
 	const int ghoul2BlockSize = reinterpret_cast<size_t>(&ghoul2[0].mTransformedVertsArray) - reinterpret_cast<size_t>(&
-		ghoul2[0].mmodel_index);
+		ghoul2[0].mModelindex);
 
 	// now we have enough instances, lets go through each one and load up the relevant details
 	for (int i = 0; i < ghoul2.size(); i++)
 	{
 		ghoul2[i].mSkelFrameNum = 0;
-		ghoul2[i].mmodel_index = -1;
+		ghoul2[i].mModelindex = -1;
 		ghoul2[i].mFileName[0] = 0;
 		ghoul2[i].mValid = false;
 		// load the ghoul2 info from the buffer
-		memcpy(&ghoul2[i].mmodel_index, buffer, ghoul2BlockSize);
-		//		Com_OPrintf("G2_LoadGhoul2Model(): ghoul2[%d].mmodel_index = %d\n",i,ghoul2[i].mmodel_index);
+		memcpy(&ghoul2[i].mModelindex, buffer, ghoul2BlockSize);
+		//		Com_OPrintf("G2_LoadGhoul2Model(): ghoul2[%d].mModelindex = %d\n",i,ghoul2[i].mModelindex);
 		buffer += ghoul2BlockSize;
 
-		if (ghoul2[i].mmodel_index != -1 && ghoul2[i].mFileName[0])
+		if (ghoul2[i].mModelindex != -1 && ghoul2[i].mFileName[0])
 		{
-			ghoul2[i].mmodel_index = i;
+			ghoul2[i].mModelindex = i;
 			G2_SetupModelPointers(&ghoul2[i]);
 		}
 
@@ -1847,7 +1847,7 @@ static void G2_LerpAngles(CGhoul2Info_v& ghoul2, CGhoul2Info_v& nextGhoul2, cons
 	// loop each model
 	for (int i = 0; i < ghoul2.size(); i++)
 	{
-		if (ghoul2[i].mmodel_index != -1)
+		if (ghoul2[i].mModelindex != -1)
 		{
 			// now walk the bone list
 			for (size_t x = 0; x < ghoul2[i].mBlist.size(); x++)
@@ -1855,7 +1855,7 @@ static void G2_LerpAngles(CGhoul2Info_v& ghoul2, CGhoul2Info_v& nextGhoul2, cons
 				boneInfo_t& bone = ghoul2[i].mBlist[x];
 				// sure we have one to lerp to?
 				if (nextGhoul2.size() > i &&
-					nextGhoul2[i].mmodel_index != -1 &&
+					nextGhoul2[i].mModelindex != -1 &&
 					nextGhoul2[i].mBlist.size() > x &&
 					nextGhoul2[i].mBlist[x].boneNumber != -1)
 				{

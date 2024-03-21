@@ -2752,7 +2752,7 @@ static QINLINE qboolean G_G2TraceCollide(trace_t* tr, vec3_t last_valid_start, v
 		{
 			g2_hit->client->g2LastSurfaceHit = g2_trace[0].mSurfaceIndex;
 			g2_hit->client->g2LastSurfaceTime = level.time;
-			g2_hit->client->g2LastSurfaceModel = g2_trace[0].mmodel_index;
+			g2_hit->client->g2LastSurfaceModel = g2_trace[0].mModelindex;
 		}
 		return qtrue;
 	}

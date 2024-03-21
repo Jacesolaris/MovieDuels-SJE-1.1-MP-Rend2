@@ -2710,7 +2710,7 @@ static void G2_Sort_Models(
 		CGhoul2Info& g2Info = ghoul2[i];
 
 		// have a ghoul model here?
-		if (g2Info.mmodel_index == -1)
+		if (g2Info.mModelindex == -1)
 		{
 			continue;
 		}
@@ -2740,7 +2740,7 @@ static void G2_Sort_Models(
 			CGhoul2Info& g2Info = ghoul2[i];
 
 			// have a ghoul model here?
-			if (g2Info.mmodel_index == -1)
+			if (g2Info.mModelindex == -1)
 			{
 				continue;
 			}
@@ -3091,7 +3091,7 @@ static void RootMatrix(
 {
 	for (int i = 0, numModels = ghoul2.size(); i < numModels; ++i)
 	{
-		if (ghoul2[i].mmodel_index == -1 || !ghoul2[i].mValid)
+		if (ghoul2[i].mModelindex == -1 || !ghoul2[i].mValid)
 		{
 			continue;
 		}

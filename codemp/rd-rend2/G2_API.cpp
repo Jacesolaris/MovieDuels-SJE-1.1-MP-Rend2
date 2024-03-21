@@ -257,10 +257,10 @@ qboolean G2API_OverrideServerWithClientData(CGhoul2Info_v& ghoul2, int modelInde
 	serverInstance->animModel = clientInstance->animModel;
 	serverInstance->currentAnimModelSize = clientInstance->currentAnimModelSize;
 	serverInstance->currentModel = clientInstance->currentModel;
-	serverInstance->current_modelSize = clientInstance->current_modelSize;
+	serverInstance->currentModelSize = clientInstance->currentModelSize;
 	serverInstance->mAnimFrameDefault = clientInstance->mAnimFrameDefault;
 	serverInstance->mModel = clientInstance->mModel;
-	serverInstance->mmodel_index = clientInstance->mmodel_index;
+	serverInstance->mModelindex = clientInstance->mModelindex;
 	serverInstance->mSurfaceRoot = clientInstance->mSurfaceRoot;
 	serverInstance->mTransformedVertsArray = clientInstance->mTransformedVertsArray;
 
@@ -291,7 +291,7 @@ static size_t GetSizeOfGhoul2Info(const CGhoul2Info& g2Info)
 	size_t size = 0;
 
 	// This is pretty ugly, but we don't want to save everything in the CGhoul2Info object.
-	size += offsetof(CGhoul2Info, mTransformedVertsArray) - offsetof(CGhoul2Info, mmodel_index);
+	size += offsetof(CGhoul2Info, mTransformedVertsArray) - offsetof(CGhoul2Info, mModelindex);
 
 	// Surface vector + size
 	size += sizeof(int);
@@ -314,8 +314,8 @@ static size_t SerializeGhoul2Info(char* buffer, const CGhoul2Info& g2Info)
 	size_t blockSize;
 
 	// Oh the ugliness...
-	blockSize = offsetof(CGhoul2Info, mTransformedVertsArray) - offsetof(CGhoul2Info, mmodel_index);
-	memcpy(buffer, &g2Info.mmodel_index, blockSize);
+	blockSize = offsetof(CGhoul2Info, mTransformedVertsArray) - offsetof(CGhoul2Info, mModelindex);
+	memcpy(buffer, &g2Info.mModelindex, blockSize);
 	buffer += blockSize;
 
 	// Surfaces vector + size
@@ -350,8 +350,8 @@ static size_t DeserializeGhoul2Info(const char* buffer, CGhoul2Info& g2Info) //r
 	const char* base = buffer;
 	size_t size;
 
-	size = offsetof(CGhoul2Info, mTransformedVertsArray) - offsetof(CGhoul2Info, mmodel_index);
-	memcpy(&g2Info.mmodel_index, buffer, size);
+	size = offsetof(CGhoul2Info, mTransformedVertsArray) - offsetof(CGhoul2Info, mModelindex);
+	memcpy(&g2Info.mModelindex, buffer, size);
 	buffer += size;
 
 	// Surfaces vector
@@ -810,7 +810,7 @@ int G2API_InitGhoul2Model(CGhoul2Info_v** ghoul2Ptr, const char* file_name, cons
 	// find a free spot in the list
 	for (model = 0; model < ghoul2.size(); model++)
 	{
-		if (ghoul2[model].mmodel_index == -1)
+		if (ghoul2[model].mModelindex == -1)
 		{
 			ghoul2[model] = CGhoul2Info();
 			break;
@@ -824,11 +824,11 @@ int G2API_InitGhoul2Model(CGhoul2Info_v** ghoul2Ptr, const char* file_name, cons
 	}
 
 	strcpy(ghoul2[model].mFileName, file_name);
-	ghoul2[model].mmodel_index = model;
+	ghoul2[model].mModelindex = model;
 	if (!G2_TestModelPointers(&ghoul2[model]))
 	{
 		ghoul2[model].mFileName[0] = 0;
-		ghoul2[model].mmodel_index = -1;
+		ghoul2[model].mModelindex = -1;
 	}
 	else
 	{
@@ -842,7 +842,7 @@ int G2API_InitGhoul2Model(CGhoul2Info_v** ghoul2Ptr, const char* file_name, cons
 
 		ghoul2[model].mModelBoltLink = -1;
 	}
-	return ghoul2[model].mmodel_index;
+	return ghoul2[model].mModelindex;
 }
 
 qboolean G2API_SetLodBias(CGhoul2Info* ghlInfo, const int lod_bias)
@@ -967,7 +967,7 @@ qboolean G2API_HasGhoul2ModelOnIndex(CGhoul2Info_v** ghlRemove, const int modelI
 {
 	CGhoul2Info_v& ghlInfo = **ghlRemove;
 
-	if (!ghlInfo.size() || (ghlInfo.size() <= modelIndex) || (ghlInfo[modelIndex].mmodel_index == -1))
+	if (!ghlInfo.size() || (ghlInfo.size() <= modelIndex) || (ghlInfo[modelIndex].mModelindex == -1))
 	{
 		return qfalse;
 	}
@@ -980,7 +980,7 @@ qboolean G2API_RemoveGhoul2Model(CGhoul2Info_v** ghlRemove, const int modelIndex
 	CGhoul2Info_v& ghlInfo = **ghlRemove;
 
 	// sanity check
-	if (!ghlInfo.size() || (ghlInfo.size() <= modelIndex) || (ghlInfo[modelIndex].mmodel_index == -1))
+	if (!ghlInfo.size() || (ghlInfo.size() <= modelIndex) || (ghlInfo[modelIndex].mModelindex == -1))
 	{
 		// if we hit this assert then we are trying to delete a ghoul2 model on a ghoul2 instance that
 		// one way or another is already gone.
@@ -1011,13 +1011,13 @@ qboolean G2API_RemoveGhoul2Model(CGhoul2Info_v** ghlRemove, const int modelIndex
 		ghlInfo[modelIndex].mSlist.clear();
 
 		// set us to be the 'not active' state
-		ghlInfo[modelIndex].mmodel_index = -1;
+		ghlInfo[modelIndex].mModelindex = -1;
 
 		int newSize = ghlInfo.size();
 		// now look through the list from the back and see if there is a block of -1's we can resize off the end of the list
 		for (int i = ghlInfo.size() - 1; i > -1; i--)
 		{
-			if (ghlInfo[i].mmodel_index == -1)
+			if (ghlInfo[i].mModelindex == -1)
 			{
 				newSize = i;
 			}
@@ -1072,7 +1072,7 @@ qboolean G2API_RemoveGhoul2Models(CGhoul2Info_v** ghlRemove)
 
 	for (modelIndex = 0; modelIndex < ghlInfo.size(); modelIndex++)
 	{
-		if (ghlInfo[modelIndex].mmodel_index == -1)
+		if (ghlInfo[modelIndex].mModelindex == -1)
 		{
 			continue;
 		}
@@ -1097,14 +1097,14 @@ qboolean G2API_RemoveGhoul2Models(CGhoul2Info_v** ghlRemove)
 		ghlInfo[modelIndex].mSlist.clear();
 
 		// set us to be the 'not active' state
-		ghlInfo[modelIndex].mmodel_index = -1;
+		ghlInfo[modelIndex].mModelindex = -1;
 	}
 
 	newSize = ghlInfo.size();
 	// now look through the list from the back and see if there is a block of -1's we can resize off the end of the list
 	for (i = ghlInfo.size() - 1; i > -1; i--)
 	{
-		if (ghlInfo[i].mmodel_index == -1)
+		if (ghlInfo[i].mModelindex == -1)
 		{
 			newSize = i;
 		}
@@ -1331,7 +1331,7 @@ qboolean G2API_GetBoneAnim(CGhoul2Info_v& ghoul2, const int modelIndex, const ch
 	if (G2_SetupModelPointers(ghlInfo))
 	{
 		const int aCurrentTime = G2API_GetTime(current_time);
-		const qboolean ret = G2_Get_Bone_Anim(ghlInfo, ghlInfo->mBlist, boneName, aCurrentTime, current_frame, startFrame, endFrame, flags, animSpeed, model_list, ghlInfo->mmodel_index);
+		const qboolean ret = G2_Get_Bone_Anim(ghlInfo, ghlInfo->mBlist, boneName, aCurrentTime, current_frame, startFrame, endFrame, flags, animSpeed, model_list, ghlInfo->mModelindex);
 #ifdef _DEBUG
 		/*
 		assert(*endFrame>0);
@@ -1468,7 +1468,7 @@ qboolean G2API_SetBoneAnglesIndex(CGhoul2Info* ghlInfo, const int index, const v
 	{
 		// ensure we flush the cache
 		ghlInfo->mSkelFrameNum = 0;
-		return G2_Set_Bone_Angles_Index(ghlInfo->mBlist, index, angles, flags, yaw, pitch, roll, model_list, ghlInfo->mmodel_index, blendTime, acurrent_time);
+		return G2_Set_Bone_Angles_Index(ghlInfo->mBlist, index, angles, flags, yaw, pitch, roll, model_list, ghlInfo->mModelindex, blendTime, acurrent_time);
 	}
 	return qfalse;
 }
@@ -1504,7 +1504,7 @@ qboolean G2API_SetBoneAngles(CGhoul2Info_v& ghoul2, const int modelIndex, const 
 		{
 			// ensure we flush the cache
 			ghlInfo->mSkelFrameNum = 0;
-			return G2_Set_Bone_Angles(ghlInfo, ghlInfo->mBlist, boneName, angles, flags, up, left, forward, model_list, ghlInfo->mmodel_index, blendTime, acurrent_time);
+			return G2_Set_Bone_Angles(ghlInfo, ghlInfo->mBlist, boneName, angles, flags, up, left, forward, model_list, ghlInfo->mModelindex, blendTime, acurrent_time);
 		}
 	}
 	return qfalse;
@@ -1516,7 +1516,7 @@ qboolean G2API_SetBoneAnglesMatrixIndex(CGhoul2Info* ghlInfo, const int index, c
 	{
 		// ensure we flush the cache
 		ghlInfo->mSkelFrameNum = 0;
-		return G2_Set_Bone_Angles_Matrix_Index(ghlInfo->mBlist, index, matrix, flags, model_list, ghlInfo->mmodel_index, blendTime, acurrent_time);
+		return G2_Set_Bone_Angles_Matrix_Index(ghlInfo->mBlist, index, matrix, flags, model_list, ghlInfo->mModelindex, blendTime, acurrent_time);
 	}
 	return qfalse;
 }
@@ -1527,7 +1527,7 @@ qboolean G2API_SetBoneAnglesMatrix(CGhoul2Info* ghlInfo, const char* boneName, c
 	{
 		// ensure we flush the cache
 		ghlInfo->mSkelFrameNum = 0;
-		return G2_Set_Bone_Angles_Matrix(ghlInfo->mFileName, ghlInfo->mBlist, boneName, matrix, flags, model_list, ghlInfo->mmodel_index, blendTime, acurrent_time);
+		return G2_Set_Bone_Angles_Matrix(ghlInfo->mFileName, ghlInfo->mBlist, boneName, matrix, flags, model_list, ghlInfo->mModelindex, blendTime, acurrent_time);
 	}
 	return qfalse;
 }
@@ -2087,7 +2087,7 @@ qboolean G2API_HaveWeGhoul2Models(const CGhoul2Info_v& ghoul2)
 	{
 		for (int i = 0; i < ghoul2.size(); i++)
 		{
-			if (ghoul2[i].mmodel_index != -1)
+			if (ghoul2[i].mModelindex != -1)
 			{
 				return qtrue;
 			}
@@ -2107,11 +2107,11 @@ void G2API_SetGhoul2model_indexes(CGhoul2Info_v& ghoul2, qhandle_t* model_list, 
 	{
 		for (i = 0; i < ghoul2.size(); i++)
 		{
-			if (ghoul2[i].mmodel_index != -1)
+			if (ghoul2[i].mModelindex != -1)
 			{
 				// broken into 3 lines for debugging, STL is a pain to view...
 				//
-				int imodel_index = ghoul2[i].mmodel_index;
+				int imodel_index = ghoul2[i].mModelindex;
 				qhandle_t mModel = model_list[imodel_index];
 				ghoul2[i].mModel = mModel;
 
@@ -2781,7 +2781,7 @@ qboolean G2_TestModelPointers(CGhoul2Info* ghlInfo) // returns true if the model
 		return qfalse;
 	}
 	ghlInfo->mValid = false;
-	if (ghlInfo->mmodel_index != -1)
+	if (ghlInfo->mModelindex != -1)
 	{
 		if (ri->Cvar_VariableIntegerValue("dedicated") ||
 			(G2_ShouldRegisterServer())) //supreme hackery!
@@ -2793,20 +2793,21 @@ qboolean G2_TestModelPointers(CGhoul2Info* ghlInfo) // returns true if the model
 			ghlInfo->mModel = RE_RegisterModel(ghlInfo->mFileName);
 		}
 		ghlInfo->currentModel = R_GetModelByHandle(ghlInfo->mModel);
-		if (ghlInfo->currentModel)
+		if (ghlInfo->currentModel &&
+			ghlInfo->currentModel->type == MOD_MDXM) //Rend2 - data is a union now, so we need to make sure it's also a glm that is loaded
 		{
 			if (ghlInfo->currentModel->data.glm &&
 				ghlInfo->currentModel->data.glm->header)
 			{
 				mdxmHeader_t* mdxm = ghlInfo->currentModel->data.glm->header;
-				if (ghlInfo->current_modelSize)
+				if (ghlInfo->currentModelSize)
 				{
-					if (ghlInfo->current_modelSize != mdxm->ofsEnd)
+					if (ghlInfo->currentModelSize != mdxm->ofsEnd)
 					{
 						Com_Error(ERR_DROP, "Ghoul2 model was reloaded and has changed, map must be restarted.\n");
 					}
 				}
-				ghlInfo->current_modelSize = mdxm->ofsEnd;
+				ghlInfo->currentModelSize = mdxm->ofsEnd;
 				ghlInfo->animModel = R_GetModelByHandle(mdxm->animIndex);
 				if (ghlInfo->animModel)
 				{
@@ -2830,7 +2831,7 @@ qboolean G2_TestModelPointers(CGhoul2Info* ghlInfo) // returns true if the model
 	if (!ghlInfo->mValid)
 	{
 		ghlInfo->currentModel = 0;
-		ghlInfo->current_modelSize = 0;
+		ghlInfo->currentModelSize = 0;
 		ghlInfo->animModel = 0;
 		ghlInfo->currentAnimModelSize = 0;
 		ghlInfo->aHeader = 0;
@@ -2868,8 +2869,8 @@ qboolean G2_SetupModelPointers(CGhoul2Info* ghlInfo) // returns true if the mode
 
 	ghlInfo->mValid = false;
 
-	//	G2WARNING(ghlInfo->mmodel_index != -1,"Setup request on non-used info slot?");
-	if (ghlInfo->mmodel_index != -1)
+	//	G2WARNING(ghlInfo->mModelindex != -1,"Setup request on non-used info slot?");
+	if (ghlInfo->mModelindex != -1)
 	{
 		G2ERROR(ghlInfo->mFileName[0], "empty ghlInfo->mFileName");
 
@@ -2896,15 +2897,15 @@ qboolean G2_SetupModelPointers(CGhoul2Info* ghlInfo) // returns true if the mode
 				ghlInfo->currentModel->data.glm->header)
 			{
 				mdxmHeader_t* mdxm = ghlInfo->currentModel->data.glm->header;
-				if (ghlInfo->current_modelSize)
+				if (ghlInfo->currentModelSize)
 				{
-					if (ghlInfo->current_modelSize != mdxm->ofsEnd)
+					if (ghlInfo->currentModelSize != mdxm->ofsEnd)
 					{
 						Com_Error(ERR_DROP, "Ghoul2 model was reloaded and has changed, map must be restarted.\n");
 					}
 				}
-				ghlInfo->current_modelSize = mdxm->ofsEnd;
-				G2ERROR(ghlInfo->current_modelSize, va("Zero sized Model? (glm) %s", ghlInfo->mFileName));
+				ghlInfo->currentModelSize = mdxm->ofsEnd;
+				G2ERROR(ghlInfo->currentModelSize, va("Zero sized Model? (glm) %s", ghlInfo->mFileName));
 
 				ghlInfo->animModel = R_GetModelByHandle(mdxm->animIndex);
 				G2ERROR(ghlInfo->animModel, va("NULL Model (gla) %s", ghlInfo->mFileName));
@@ -2932,7 +2933,7 @@ qboolean G2_SetupModelPointers(CGhoul2Info* ghlInfo) // returns true if the mode
 	if (!ghlInfo->mValid)
 	{
 		ghlInfo->currentModel = 0;
-		ghlInfo->current_modelSize = 0;
+		ghlInfo->currentModelSize = 0;
 		ghlInfo->animModel = 0;
 		ghlInfo->currentAnimModelSize = 0;
 		ghlInfo->aHeader = 0;

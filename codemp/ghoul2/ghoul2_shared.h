@@ -286,7 +286,7 @@ using mdxaBone_v = std::vector<std::pair<int, mdxaBone_t>>;
 
 class CBoneCache;
 
-// NOTE order in here matters. We save out from mmodel_index to mFlags, but not the STL vectors that are at the top or the bottom.
+// NOTE order in here matters. We save out from mModelindex to mFlags, but not the STL vectors that are at the top or the bottom.
 class CGhoul2Info
 {
 public:
@@ -294,7 +294,7 @@ public:
 	boltInfo_v mBltlist;
 	boneInfo_v mBlist;
 	// save from here
-	int mmodel_index;
+	int mModelindex;
 	qhandle_t mCustomShader;
 	qhandle_t mCustomSkin;
 	int mModelBoltLink;
@@ -320,7 +320,7 @@ public:
 	// call the questionably efficient G2_SetupModelPointers(this) to insure validity
 	bool mValid; // all the below are proper and valid
 	const model_s* currentModel;
-	int current_modelSize;
+	int currentModelSize;
 	const model_s* animModel;
 	int currentAnimModelSize;
 	const mdxaHeader_t* aHeader;
@@ -330,7 +330,7 @@ public:
 #endif
 
 	CGhoul2Info() :
-		mmodel_index(-1),
+		mModelindex(-1),
 		mCustomShader(0),
 		mCustomSkin(0),
 		mModelBoltLink(0),
@@ -350,7 +350,7 @@ public:
 		mSkin(0),
 		mValid(false),
 		currentModel(nullptr),
-		current_modelSize(0),
+		currentModelSize(0),
 		animModel(nullptr),
 		currentAnimModelSize(0),
 		aHeader(nullptr)

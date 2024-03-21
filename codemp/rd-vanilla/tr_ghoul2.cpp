@@ -2812,7 +2812,7 @@ static void G2_Sort_Models(CGhoul2Info_v& ghoul2, int* const model_list, int* co
 	for (i = 0; i < ghoul2.size(); i++)
 	{
 		// have a ghoul model here?
-		if (ghoul2[i].mmodel_index == -1)
+		if (ghoul2[i].mModelindex == -1)
 		{
 			continue;
 		}
@@ -2839,7 +2839,7 @@ static void G2_Sort_Models(CGhoul2Info_v& ghoul2, int* const model_list, int* co
 		for (i = 0; i < ghoul2.size(); i++)
 		{
 			// have a ghoul model here?
-			if (ghoul2[i].mmodel_index == -1)
+			if (ghoul2[i].mModelindex == -1)
 			{
 				continue;
 			}
@@ -3222,7 +3222,7 @@ static void RootMatrix(CGhoul2Info_v& ghoul2, const int time, const vec3_t scale
 {
 	for (int i = 0; i < ghoul2.size(); i++)
 	{
-		if (ghoul2[i].mmodel_index != -1 && ghoul2[i].mValid)
+		if (ghoul2[i].mModelindex != -1 && ghoul2[i].mValid)
 		{
 			if (ghoul2[i].mFlags & GHOUL2_NEWORIGIN)
 			{
