@@ -4543,6 +4543,11 @@ void ForceTelepathy(gentity_t* self)
 		return;
 	}
 
+	if (self->client->ps.weapon == WP_TURRET)
+	{
+		return;
+	}
+
 	if (self->client->ps.weaponTime > 0)
 	{
 		return;
