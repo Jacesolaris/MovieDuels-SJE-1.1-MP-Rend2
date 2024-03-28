@@ -111,12 +111,13 @@ RE_AddPolyToScene
 
 =====================
 */
-void RE_AddPolyToScene(qhandle_t hShader, int numVerts, const polyVert_t* verts, int numPolys) {
+void RE_AddPolyToScene(qhandle_t hShader, int numVerts, const polyVert_t* verts, int numPolys) 
+{
 	srfPoly_t* poly;
 	int			i, j;
 	int			fogIndex;
 	fog_t* fog;
-	vec3_t		bounds[2];
+	vec3_t		bounds[2]{};
 
 	if (!tr.registered) {
 		return;
@@ -241,18 +242,21 @@ RE_AddDynamicLightToScene
 */
 static void RE_AddDynamicLightToScene(const vec3_t org, const float intensity, const float r, const float g, const float b, const int additive)
 {
-	dlight_t* dl;
+	if (!tr.registered)
+	{
+		return;
+	}
+	if (r_numdlights >= MAX_DLIGHTS)
+	{
+		return;
+	}
+	if (intensity <= 0)
+	{
+		return;
+	}
 
-	if (!tr.registered) {
-		return;
-	}
-	if (r_numdlights >= MAX_DLIGHTS) {
-		return;
-	}
-	if (intensity <= 0) {
-		return;
-	}
-	dl = &backEndData->dlights[r_numdlights++];
+	dlight_t* dl = &backEndData->dlights[r_numdlights++];
+
 	VectorCopy(org, dl->origin);
 	dl->radius = intensity;
 	dl->color[0] = r;
@@ -374,7 +378,7 @@ void RE_BeginScene(const refdef_t* fd)
 
 		if (r_forceSun->integer == 2)
 		{
-			vec4_t lightDir, lightCol;
+			vec4_t lightDir{}, lightCol{};
 			int scale = 32768;
 			float angle = (fd->time % scale) / (float)scale * M_PI;
 			lightDir[0] = cos(angle);
