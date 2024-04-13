@@ -31,29 +31,29 @@ because otherwise shadows from different body parts would
 overlap and double darken.
 =================
 */
-void RB_ShadowFinish(void) {
-	if (r_shadows->integer != 2) {
+void RB_ShadowFinish(void) 
+{
+	if (r_shadows->integer != 2)
+	{
 		return;
 	}
-	if (glConfig.stencilBits < 4) {
+	if (glConfig.stencilBits < 4)
+	{
 		return;
 	}
-
-	GL_Cull(CT_TWO_SIDED);
 
 	GL_BindToTMU(tr.whiteImage, TB_COLORMAP);
 
 	GL_State(GLS_STENCILTEST_ENABLE | GLS_DEPTHMASK_TRUE | GLS_SRCBLEND_DST_COLOR | GLS_DSTBLEND_ZERO);
 
 	qglStencilFunc(GL_NOTEQUAL, 0, 0xff);
-	qglViewport(0, 0, glConfig.vidWidth, glConfig.vidHeight);
-	qglScissor(0, 0, glConfig.vidWidth, glConfig.vidHeight);
+	GL_SetViewportAndScissor(0, 0, glConfig.vidWidth, glConfig.vidHeight);
 	matrix_t projection;
 	Matrix16Ortho(0, glConfig.vidWidth, glConfig.vidHeight, 0, 0, 1, projection);
 
 	GL_Cull(CT_TWO_SIDED);
 	GLSL_BindProgram(&tr.textureColorShader);
-	vec4_t color;
+	vec4_t color{};
 	VectorSet4(color, 0.6f, 0.6f, 0.6f, 1.0f);
 	GLSL_SetUniformVec4(&tr.textureColorShader, UNIFORM_COLOR, color);
 	GLSL_SetUniformMatrix4x4(&tr.textureColorShader, UNIFORM_MODELVIEWPROJECTIONMATRIX, projection);

@@ -3993,6 +3993,7 @@ qboolean client_userinfo_changed(const int clientNum)
 			|| Class_Model(model, "bodhi")
 			|| Class_Model(model, "niennunb")
 			|| Class_Model(model, "ackbar")
+			|| Class_Model(model, "baze")
 			|| Class_Model(model, "bailorgana")
 			|| Class_Model(model, "landoskiff")
 			|| Class_Model(model, "lando/red")
@@ -4000,22 +4001,6 @@ qboolean client_userinfo_changed(const int clientNum)
 			|| Class_Model(model, "lando/main"))
 		{
 			client->pers.nextbotclass = BCLASS_LANDO;
-			client->pers.botmodelscale = BOTZIZE_NORMAL;
-			if (!(ent->r.svFlags & SVF_BOT))
-			{
-				if (g_gametype.integer != GT_MOVIEDUELS_DUEL && g_gametype.integer != GT_MOVIEDUELS_POWERDUEL && g_gametype.integer !=
-					GT_MOVIEDUELS_SIEGE)
-				{
-					client->ps.stats[STAT_HEALTH] = ent->health = 0;
-					player_die(ent, ent, ent, 100000, MOD_TEAM_CHANGE);
-					trap->UnlinkEntity((sharedEntity_t*)ent);
-				}
-				Com_Printf("Changes to your Class settings will take effect the next time you respawn.\n");
-			}
-		}
-		else if (Class_Model(model, "baze"))
-		{
-			client->pers.nextbotclass = BCLASS_SWAMPTROOPER;
 			client->pers.botmodelscale = BOTZIZE_NORMAL;
 			if (!(ent->r.svFlags & SVF_BOT))
 			{
