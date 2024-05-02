@@ -486,7 +486,7 @@ using shader_t = struct shader_s
 	shaderStage_t* stages;
 
 	float clampTime; // time this shader is clamped to
-	float time_offset; // current time offset for this shader
+	float timeOffset; // current time offset for this shader
 
 	// True if this shader has a stage with glow in it (just an optimization).
 	bool hasGlow;
@@ -1439,7 +1439,7 @@ shader_t* R_GetShaderByHandle(qhandle_t h_shader);
 shader_t* R_FindShaderByName(const char* name);
 void R_InitShaders(const qboolean server);
 void R_ShaderList_f();
-void R_RemapShader(const char* shader_name, const char* new_shader_name, const char* time_offset);
+void R_RemapShader(const char* shader_name, const char* new_shader_name, const char* timeOffset);
 
 /*
 ====================================================================

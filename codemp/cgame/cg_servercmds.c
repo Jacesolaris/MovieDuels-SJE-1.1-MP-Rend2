@@ -316,7 +316,7 @@ void CG_ShaderStateChanged(void)
 {
 	char originalShader[MAX_QPATH];
 	char newShader[MAX_QPATH];
-	char time_offset[16];
+	char timeOffset[16];
 
 	const char* o = CG_ConfigString(CS_SHADERSTATE);
 	while (o && *o)
@@ -341,10 +341,10 @@ void CG_ShaderStateChanged(void)
 			o = strstr(t, "@");
 			if (o)
 			{
-				strncpy(time_offset, t, o - t);
-				time_offset[o - t] = 0;
+				strncpy(timeOffset, t, o - t);
+				timeOffset[o - t] = 0;
 				o++;
-				trap->R_RemapShader(originalShader, newShader, time_offset);
+				trap->R_RemapShader(originalShader, newShader, timeOffset);
 			}
 		}
 		else

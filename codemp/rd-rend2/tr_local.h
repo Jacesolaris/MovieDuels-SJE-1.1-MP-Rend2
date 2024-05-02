@@ -992,7 +992,7 @@ typedef struct shader_s {
 	qboolean	useDistortion;
 
 	float clampTime;                                  // time this shader is clamped to
-	float time_offset;                                 // current time offset for this shader
+	float timeOffset;                                 // current time offset for this shader
 
 	struct shader_s* remappedShader;                  // current shader this one is remapped too
 
@@ -2945,7 +2945,7 @@ shader_t* R_GetShaderByHandle(qhandle_t hShader);
 shader_t* R_FindShaderByName(const char* name);
 void R_InitShaders(const qboolean server);
 void R_ShaderList_f(void);
-void R_RemapShader(const char* shader_name, const char* new_shader_name, const char* time_offset);
+void R_RemapShader(const char* shader_name, const char* new_shader_name, const char* timeOffset);
 shader_t* R_CreateShaderFromTextureBundle(
 	const char* name,
 	const textureBundle_t* bundle,

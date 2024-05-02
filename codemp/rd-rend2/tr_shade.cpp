@@ -153,7 +153,7 @@ void RB_BeginSurface(shader_t* shader, int fogNum, int cubemapIndex) {
 	tess.externalIBO = nullptr;
 	tess.useInternalVBO = qtrue;
 
-	tess.shaderTime = backEnd.refdef.floatTime - tess.shader->time_offset;
+	tess.shaderTime = backEnd.refdef.floatTime - tess.shader->timeOffset;
 	if (tess.shader->clampTime && tess.shaderTime >= tess.shader->clampTime) {
 		tess.shaderTime = tess.shader->clampTime;
 	}
@@ -1528,7 +1528,7 @@ static void RB_IterateStagesGeneric(shaderCommands_t* input, const VertexArraysP
 				vertColor[3] = 0.0f;
 			}
 
-			if (backEnd.currentEntity->e.hModel != NULL)
+			if (backEnd.currentEntity->e.hModel != NULL_HANDLE)
 			{
 				model_t* model = R_GetModelByHandle(backEnd.currentEntity->e.hModel);
 				if (model->type != MOD_BRUSH)

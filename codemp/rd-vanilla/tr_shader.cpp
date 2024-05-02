@@ -148,7 +148,7 @@ static long generateHashValue(const char* fname, const int size) {
 	return hash;
 }
 
-void R_RemapShader(const char* shader_name, const char* new_shader_name, const char* time_offset)
+void R_RemapShader(const char* shader_name, const char* new_shader_name, const char* timeOffset)
 {
 	char		stripped_name[MAX_QPATH];
 	qhandle_t	h;
@@ -188,8 +188,8 @@ void R_RemapShader(const char* shader_name, const char* new_shader_name, const c
 			}
 		}
 	}
-	if (time_offset) {
-		sh2->time_offset = atof(time_offset);
+	if (timeOffset) {
+		sh2->timeOffset = atof(timeOffset);
 	}
 }
 
