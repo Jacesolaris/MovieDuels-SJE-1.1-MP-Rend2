@@ -1253,7 +1253,7 @@ static void ClientTimerActions(gentity_t* ent, const int msec)
 			client->ps.stats[STAT_WEAPONS] &= ~(1 << WP_TRIP_MINE);
 		}
 
-		if(!(ent->r.svFlags & SVF_BOT) &&
+		if (!(ent->r.svFlags & SVF_BOT) &&
 			!PM_SaberInAttack(ent->client->ps.saber_move)
 			&& !(ent->client->ps.ManualBlockingFlags & 1 << HOLDINGBLOCK)
 			&& !ent->client->poisonTime

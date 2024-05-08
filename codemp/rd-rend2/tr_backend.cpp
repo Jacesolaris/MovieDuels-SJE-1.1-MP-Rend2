@@ -1188,15 +1188,10 @@ static void RB_PrepareForEntity(int entityNum, float originalTime)
 	tess.shaderTime = backEnd.refdef.floatTime - tess.shader->timeOffset;
 }
 
-static void RB_SubmitDrawSurfsForDepthFill(
-	drawSurf_t* drawSurfs,
-	int numDrawSurfs,
-	float originalTime)
+static void RB_SubmitDrawSurfsForDepthFill(drawSurf_t* drawSurfs, int numDrawSurfs, float originalTime)
 {
 	shader_t* oldShader = nullptr;
-	int oldentity_num = -1;
-	int oldSort = -1;
-	int oldDepthRange = 0;
+	int oldEntityNum = -1;
 	CBoneCache* oldBoneCache = nullptr;
 
 	drawSurf_t* drawSurf = drawSurfs;
@@ -1210,9 +1205,6 @@ static void RB_SubmitDrawSurfsForDepthFill(
 		R_DecomposeSort(drawSurf->sort, &entityNum, &shader, &cubemapIndex, &postRender);
 		assert(shader != nullptr);
 
-		if (shader->useSimpleDepthShader == qtrue)
-			shader = tr.defaultShader;
-
 		if (shader->sort != SS_OPAQUE || shader->useDistortion)
 		{
 			// Don't draw yet, let's see what's to come
@@ -1221,7 +1213,6 @@ static void RB_SubmitDrawSurfsForDepthFill(
 
 		if (shader->useSimpleDepthShader == qtrue)
 			shader = tr.defaultShader;
-
 
 		if (*drawSurf->surface == SF_MDX)
 		{
@@ -1234,7 +1225,7 @@ static void RB_SubmitDrawSurfsForDepthFill(
 			}
 		}
 
-		if (shader == oldShader && entityNum == oldentity_num)
+		if (shader == oldShader && entityNum == oldEntityNum)
 		{
 			// fast path, same as previous sort
 			rb_surfaceTable[*drawSurf->surface](drawSurf->surface);
@@ -1245,8 +1236,7 @@ static void RB_SubmitDrawSurfsForDepthFill(
 		// a "entityMergable" shader is a shader that can have surfaces from
 		// seperate entities merged into a single batch, like smoke and blood
 		// puff sprites
-		if (shader != oldShader ||
-			(entityNum != oldentity_num && !shader->entityMergable))
+		if (shader != oldShader || (entityNum != oldEntityNum && !shader->entityMergable))
 		{
 			if (oldShader != nullptr)
 			{
@@ -1258,13 +1248,11 @@ static void RB_SubmitDrawSurfsForDepthFill(
 			oldShader = shader;
 		}
 
-		oldSort = drawSurf->sort;
-
 		// change the modelview matrix if needed
-		if (entityNum != oldentity_num)
+		if (entityNum != oldEntityNum)
 		{
 			RB_PrepareForEntity(entityNum, originalTime);
-			oldentity_num = entityNum;
+			oldEntityNum = entityNum;
 		}
 
 		// add the triangles for this surface
@@ -1366,8 +1354,7 @@ static void RB_SubmitDrawSurfs(
 			oldentity_num = entityNum;
 		}
 
-		qboolean isDistortionShader = (qboolean)
-			((shader->useDistortion == qtrue) || (backEnd.currentEntity && backEnd.currentEntity->e.renderfx & RF_DISTORTION));
+		qboolean isDistortionShader = (qboolean)((shader->useDistortion == qtrue) || (backEnd.currentEntity && backEnd.currentEntity->e.renderfx & RF_DISTORTION));
 
 		if (backEnd.refractionFill != isDistortionShader)
 			continue;

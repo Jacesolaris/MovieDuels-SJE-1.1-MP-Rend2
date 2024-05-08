@@ -265,7 +265,7 @@ static int CG_RagCallback(const int callType)
 		break;
 	case RAG_CALLBACK_BONEINSOLID:
 #if 0
-	{
+		{
 		ragCallbackBoneInSolid_t* callData = &cg.sharedBuffer.rcbBoneInSolid;
 
 		if (callData->solidCount > 16)
@@ -280,7 +280,7 @@ static int CG_RagCallback(const int callType)
 		}
 	}
 #endif
-	break;
+		break;
 	case RAG_CALLBACK_TRACELINE:
 	{
 		ragCallbackTraceLine_t* callData = &cg.sharedBuffer.rcbTraceLine;

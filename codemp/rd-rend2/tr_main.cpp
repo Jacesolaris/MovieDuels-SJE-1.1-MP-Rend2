@@ -2377,7 +2377,7 @@ void R_SetupPshadowMaps(trRefdef_t* refdef)
 		if (shadow->viewRadius * 3.0f > shadow->lightRadius)
 		{
 			shadow->lightRadius = shadow->viewRadius * 3.0f;
-	}
+		}
 
 		VectorMA(shadow->viewOrigin, shadow->viewRadius, lightDir, shadow->lightOrigin);
 
@@ -2398,7 +2398,7 @@ void R_SetupPshadowMaps(trRefdef_t* refdef)
 		shadow->cullPlane.dist = DotProduct(shadow->cullPlane.normal, shadow->lightOrigin);
 		shadow->cullPlane.type = PLANE_NON_AXIAL;
 		SetPlaneSignbits(&shadow->cullPlane);
-}
+	}
 }
 
 void R_RenderCubemapSide(int cubemapIndex, int cubemapSide, bool bounce)

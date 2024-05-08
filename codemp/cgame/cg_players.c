@@ -19261,11 +19261,11 @@ SkipTrueView:
 	{
 		if (cent->currentState.weapon == WP_STUN_BATON && cent->currentState.eFlags & EF_ALT_FIRING)
 		{
-			trap->S_AddLoopingSound(cent->currentState.number, cg.refdef.vieworg, vec3_origin,trap->S_RegisterSound("sound/weapons/concussion/idle_lp.wav"));
+			trap->S_AddLoopingSound(cent->currentState.number, cg.refdef.vieworg, vec3_origin, trap->S_RegisterSound("sound/weapons/concussion/idle_lp.wav"));
 		}
 		else
 		{
-			trap->S_AddLoopingSound(cent->currentState.number, cg.refdef.vieworg, vec3_origin,trap->S_RegisterSound("sound/weapons/baton/idle.wav"));
+			trap->S_AddLoopingSound(cent->currentState.number, cg.refdef.vieworg, vec3_origin, trap->S_RegisterSound("sound/weapons/baton/idle.wav"));
 		}
 	}
 

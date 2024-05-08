@@ -1609,7 +1609,7 @@ void G2API_AnimateG2ModelsRag(CGhoul2Info_v& ghoul2, const int acurrent_time, CR
 		{
 			G2_Animate_Bone_List(ghoul2, current_time, model, params);
 		}
-}
+	}
 }
 
 int G2_Find_Bone_Rag(CGhoul2Info* ghlInfo, boneInfo_v& blist, const char* boneName);
@@ -2126,7 +2126,7 @@ char* G2API_GetAnimFileNameIndex(const qhandle_t modelIndex)
 {
 	model_t* mod_m = R_GetModelByHandle(modelIndex);
 	return mod_m->data.glm->header->animName;
-		}
+}
 
 qboolean G2API_GetAnimFileName(CGhoul2Info* ghlInfo, char** filename)
 {
@@ -2445,10 +2445,10 @@ int G2API_CopyGhoul2Instance(const CGhoul2Info_v& g2_from, CGhoul2Info_v& g2To, 
 #endif
 		//G2ANIM(ghoul2From,"G2API_CopyGhoul2Instance (source)");
 		//G2ANIM(ghoul2To,"G2API_CopyGhoul2Instance (dest)");
-			}
+	}
 
 	return -1;
-		}
+}
 
 void G2API_CopySpecificG2Model(CGhoul2Info_v& ghoul2From, const int modelFrom, CGhoul2Info_v& ghoul2To, const int modelTo)
 {
@@ -2479,7 +2479,7 @@ void G2API_CopySpecificG2Model(CGhoul2Info_v& ghoul2From, const int modelFrom, C
 				RemoveBoneCache(ghoul2To[modelTo].mBoneCache);
 				ghoul2To[modelTo].mBoneCache = 0;
 			}
-}
+		}
 		ghoul2To[modelTo] = ghoul2From[modelFrom];
 
 #if 0
@@ -2568,7 +2568,7 @@ char* G2API_GetSurfaceName(CGhoul2Info_v& ghoul2, const int modelIndex, const in
 		}
 	}
 	return noSurface;
-		}
+}
 
 int	G2API_GetSurfaceIndex(CGhoul2Info* ghlInfo, const char* surface_name)
 {
@@ -2943,7 +2943,7 @@ qboolean G2_SetupModelPointers(CGhoul2Info* ghlInfo) // returns true if the mode
 	G2Time_G2_SetupModelPointers += G2PerformanceTimer_G2_SetupModelPointers.End();
 #endif
 	return (qboolean)ghlInfo->mValid;
-	}
+}
 
 qboolean G2_SetupModelPointers(CGhoul2Info_v& ghoul2) // returns true if any model is properly set up
 {
@@ -2955,7 +2955,7 @@ qboolean G2_SetupModelPointers(CGhoul2Info_v& ghoul2) // returns true if any mod
 		ret = ret || r;
 	}
 	return (qboolean)ret;
-	}
+}
 
 qboolean G2API_IsGhoul2InfovValid(const CGhoul2Info_v& ghoul2)
 {

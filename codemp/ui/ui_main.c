@@ -7354,7 +7354,7 @@ static void UI_RunMenuScript(char** args)
 			{
 				trap->Cvar_Set("ui_dualforcepower", "1");
 			}
-			}
+		}
 		else if (Q_stricmp(name, "dualForcePowers") == 0)
 		{
 			int	dualforcePower, i, forcePowerDisable = 0;
@@ -7392,7 +7392,7 @@ static void UI_RunMenuScript(char** args)
 			}
 
 			trap->Cvar_Set("g_forcePowerDisable", va("%i", forcePowerDisable));
-			}
+		}
 		else if (Q_stricmp(name, "forcePowersDisable") == 0)
 		{
 			int	forcePowerDisable, i;
@@ -7409,7 +7409,7 @@ static void UI_RunMenuScript(char** args)
 
 				trap->Cvar_Set("g_forcePowerDisable", va("%i", forcePowerDisable));
 			}
-			}
+		}
 		else if (Q_stricmp(name, "weaponDisable") == 0)
 		{
 			int	weaponDisable, i;
@@ -7440,9 +7440,9 @@ static void UI_RunMenuScript(char** args)
 
 				trap->Cvar_Set(cvarString, va("%i", weaponDisable));
 			}
-			}
-			// If this is siege, change all the bots to humans, because we faked it earlier
-			//  swapping humans for bots on the menu
+		}
+		// If this is siege, change all the bots to humans, because we faked it earlier
+		//  swapping humans for bots on the menu
 		else if (Q_stricmp(name, "setSiegeNoBots") == 0)
 		{
 			if (uiInfo.gameTypes[ui_netGametype.integer].gtEnum == GT_MOVIEDUELS_SIEGE)

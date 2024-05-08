@@ -111,7 +111,7 @@ RE_AddPolyToScene
 
 =====================
 */
-void RE_AddPolyToScene(qhandle_t hShader, int numVerts, const polyVert_t* verts, int numPolys) 
+void RE_AddPolyToScene(qhandle_t hShader, int numVerts, const polyVert_t* verts, int numPolys)
 {
 	srfPoly_t* poly;
 	int			i, j;
