@@ -578,7 +578,7 @@ Cvar_Print
 Prints the value, default, and latched string of the given variable
 ============
 */
-void Cvar_Print(cvar_t* v)
+static void Cvar_Print(cvar_t* v)
 {
 	Com_Printf(
 		S_COLOR_GREY "Cvar " S_COLOR_WHITE "%s = " S_COLOR_GREY "\"" S_COLOR_WHITE "%s" S_COLOR_GREY "\"" S_COLOR_WHITE,
@@ -997,7 +997,7 @@ Prints the contents of a cvar
 (preferred over Cvar_Command where cvar names and commands conflict)
 ============
 */
-void Cvar_Print_f(void)
+static void Cvar_Print_f(void)
 {
 	if (Cmd_Argc() != 2)
 	{
@@ -1023,7 +1023,7 @@ Toggles a cvar for easy single key binding, optionally through a list of
 given values
 ============
 */
-void Cvar_Toggle_f(void)
+static void Cvar_Toggle_f(void)
 {
 	const int c = Cmd_Argc();
 
@@ -1070,7 +1070,7 @@ Allows setting and defining of arbitrary cvars from console, even if they
 weren't declared in C code.
 ============
 */
-void Cvar_Set_f(void)
+static void Cvar_Set_f(void)
 {
 	const int c = Cmd_Argc();
 	char* cmd = Cmd_Argv(0);
@@ -1123,7 +1123,7 @@ void Cvar_Set_f(void)
 Cvar_Math_f
 ============
 */
-void Cvar_Math_f(void)
+static void Cvar_Math_f(void)
 {
 	const int c = Cmd_Argc();
 	char* cmd = Cmd_Argv(0);
@@ -1165,7 +1165,7 @@ void Cvar_Math_f(void)
 Cvar_Reset_f
 ============
 */
-void Cvar_Reset_f(void)
+static void Cvar_Reset_f(void)
 {
 	if (Cmd_Argc() != 2)
 	{
@@ -1239,7 +1239,7 @@ void Cvar_WriteVariables(const fileHandle_t f)
 Cvar_List_f
 ============
 */
-void Cvar_List_f(void)
+static void Cvar_List_f(void)
 {
 	const cvar_t* var;
 	int i;
@@ -1287,7 +1287,7 @@ void Cvar_List_f(void)
 		Com_Printf("%i cvar indexes\n", cvar_numIndexes);
 }
 
-void Cvar_SerenityJediEngine_f(void)
+static void Cvar_SerenityJediEngine_f(void)
 {
 	Com_Printf("-----A basic guide to player debugging----------\n");
 	Com_Printf("-----------------------------------------------\n");
@@ -1305,7 +1305,7 @@ void Cvar_SerenityJediEngine_f(void)
 	Com_Printf("-Use these commands to help locate bugs or specific moments in code-\n");
 }
 
-void Cvar_ListModified_f(void)
+static void Cvar_ListModified_f(void)
 {
 	// build a list of cvars that are modified
 	for (const cvar_t* var = cvar_vars;
@@ -1323,7 +1323,7 @@ void Cvar_ListModified_f(void)
 	}
 }
 
-void Cvar_ListUserCreated_f(void)
+static void Cvar_ListUserCreated_f(void)
 {
 	uint32_t count = 0;
 
@@ -1402,7 +1402,7 @@ Unsets a userdefined cvar
 ============
 */
 
-void Cvar_Unset_f(void)
+static void Cvar_Unset_f(void)
 {
 	if (Cmd_Argc() != 2)
 	{
@@ -1421,7 +1421,7 @@ void Cvar_Unset_f(void)
 		Com_Printf("Error: %s: Variable %s is not user created.\n", Cmd_Argv(0), cv->name);
 }
 
-void Cvar_UnsetUserCreated_f(void)
+static void Cvar_UnsetUserCreated_f(void)
 {
 	cvar_t* curvar = cvar_vars;
 	uint32_t count = 0;
@@ -1696,7 +1696,7 @@ void Cvar_Init(void)
 	Cmd_AddCommand("cvar_usercreated", Cvar_ListUserCreated_f, "Show all user created cvars");
 	Cmd_AddCommand("cvar_modified", Cvar_ListModified_f, "Show all modified cvars");
 	Cmd_AddCommand("cvar_restart", Cvar_Restart_f, "Resetart the cvar sub-system");
-	Cmd_AddCommand("helpdebug", Cvar_SerenityJediEngine_f, "serenityjediengine note");
+	Cmd_AddCommand("Debuginfo", Cvar_SerenityJediEngine_f, "serenityjediengine note");
 }
 
 static void Cvar_Realloc(char** string, char* memPool, int& memPoolUsed)
@@ -1712,7 +1712,7 @@ static void Cvar_Realloc(char** string, char* memPool, int& memPoolUsed)
 }
 
 //Turns many small allocation blocks into one big one.
-void Cvar_Defrag(void)
+static void Cvar_Defrag(void)
 {
 	cvar_t* var;
 	int totalMem = 0;

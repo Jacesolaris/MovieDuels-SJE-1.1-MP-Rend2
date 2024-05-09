@@ -474,8 +474,11 @@ static SOCKET NET_IPSocket(char* net_interface, const int port, int* err)
 
 	Com_Printf("----- Client Initialization -----\n");
 	Com_Printf("-----------------------------------------------------------------\n");
-	Com_Printf("---------- Genuine SerenityJediEngine-(Solaris Edition)----------\n");
-	Com_Printf("---------------------Build date 08/05/2024-----------------------\n");
+	Com_Printf("----- Genuine MovieDuels SerenityJediEngine(Solaris Edition)-----\n");
+	Com_Printf("---------------- MovieDuels-SJE-1.0-MP---------------------------\n");
+	Com_Printf("-----------------------------------------------------------------\n");
+	Com_Printf("------------------------Update 6.5.2-----------------------------\n");
+	Com_Printf("------------------Build Date 09/05/2024--------------------------\n");
 	Com_Printf("-----------------------------------------------------------------\n");
 	Com_Printf("------------------------LightSaber-------------------------------\n");
 	Com_Printf("-----------An elegant weapon for a more civilized age------------\n");
@@ -491,11 +494,11 @@ static SOCKET NET_IPSocket(char* net_interface, const int port, int* err)
 	Com_Printf("I added a 50 percent increase to end-phase damage.\n");
 	Com_Printf("More damage at the end of the swing should maintain the fast-paced feel.\n");
 	Com_Printf("Well-timed and well-aimed slashes are more effective than on basejka.\n");
-	Com_Printf("This could potentially improve the way we play JKA quite a lot.\n");
+	Com_Printf("This could potentially improve the way we play MovieDuels quite a lot.\n");
 	Com_Printf("Less spam-friendly, and more accurate hit detection could make the game more movie like.\n");
 	Com_Printf("-----------------------------------------------------------------\n");
 	Com_Printf("------Type (seta cl_noprint 0) to see text------\n");
-	Com_Printf("------Type (helpdebug) to open debug command list------\n");
+	Com_Printf("------Type (Debuginfo) to open debug command list------\n");
 	Com_Printf("------Type (Adminlogin <password>) to log in as admin------\n");
 
 	if ((newsocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == INVALID_SOCKET)
@@ -560,7 +563,7 @@ static SOCKET NET_IPSocket(char* net_interface, const int port, int* err)
 NET_OpenSocks
 ====================
 */
-void NET_OpenSocks(const int port)
+static void NET_OpenSocks(const int port)
 {
 	sockaddr_in address;
 	int len;
@@ -766,7 +769,7 @@ NET_GetLocalAddress
 	Q_max(0, (int) (ifr)->ifr_addr.sa_len - (int) sizeof((ifr)->ifr_addr))))
 #endif
 
-void NET_GetLocalAddress(void) {
+static void NET_GetLocalAddress(void) {
 	struct ifreq requestBuffer[MAX_IPS], * linkInterface, * inetInterface;
 	struct ifconf ifc;
 	struct ifreq ifr;
@@ -862,7 +865,7 @@ void NET_GetLocalAddress(void) {
 	close(interfaceSocket);
 }
 #else
-void NET_GetLocalAddress(void)
+static void NET_GetLocalAddress(void)
 {
 	char hostname[256];
 	char* p;
@@ -911,7 +914,7 @@ void NET_GetLocalAddress(void)
 NET_OpenIP
 ====================
 */
-void NET_OpenIP(void)
+static void NET_OpenIP(void)
 {
 	const int port = net_port->integer;
 	int err;
