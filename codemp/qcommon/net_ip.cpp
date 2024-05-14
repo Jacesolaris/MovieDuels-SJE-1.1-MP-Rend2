@@ -478,7 +478,7 @@ static SOCKET NET_IPSocket(char* net_interface, const int port, int* err)
 	Com_Printf("---------------- MovieDuels-SJE-1.0-MP---------------------------\n");
 	Com_Printf("-----------------------------------------------------------------\n");
 	Com_Printf("------------------------Update 6.5.2-----------------------------\n");
-	Com_Printf("------------------Build Date 09/05/2024--------------------------\n");
+	Com_Printf("------------------Build Date 14/05/2024--------------------------\n");
 	Com_Printf("-----------------------------------------------------------------\n");
 	Com_Printf("------------------------LightSaber-------------------------------\n");
 	Com_Printf("-----------An elegant weapon for a more civilized age------------\n");
